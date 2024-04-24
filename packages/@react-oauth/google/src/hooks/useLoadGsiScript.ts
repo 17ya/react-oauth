@@ -2,6 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 
 export interface UseLoadGsiScriptOptions {
   /**
+   * The URL of the GSI script.
+   */
+  src?:string
+  /**
    * Nonce applied to GSI script tag. Propagates to GSI's inline style tag
    */
   nonce?: string;
@@ -18,7 +22,7 @@ export interface UseLoadGsiScriptOptions {
 export default function useLoadGsiScript(
   options: UseLoadGsiScriptOptions = {},
 ): boolean {
-  const { nonce, onScriptLoadSuccess, onScriptLoadError } = options;
+  const {src, nonce, onScriptLoadSuccess, onScriptLoadError } = options;
 
   const [scriptLoadedSuccessfully, setScriptLoadedSuccessfully] =
     useState(false);
@@ -31,7 +35,7 @@ export default function useLoadGsiScript(
 
   useEffect(() => {
     const scriptTag = document.createElement('script');
-    scriptTag.src = 'https://accounts.google.com/gsi/client';
+    scriptTag.src = src ? src : 'https://accounts.google.com/gsi/client';
     scriptTag.async = true;
     scriptTag.defer = true;
     scriptTag.nonce = nonce;

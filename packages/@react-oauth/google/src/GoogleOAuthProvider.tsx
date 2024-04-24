@@ -14,6 +14,7 @@ const GoogleOAuthContext = createContext<GoogleOAuthContextProps>(null!);
 interface GoogleOAuthProviderProps extends UseLoadGsiScriptOptions {
   clientId: string;
   children: ReactNode;
+  src?:string
 }
 
 export default function GoogleOAuthProvider({
@@ -22,11 +23,13 @@ export default function GoogleOAuthProvider({
   onScriptLoadSuccess,
   onScriptLoadError,
   children,
+  src
 }: GoogleOAuthProviderProps) {
   const scriptLoadedSuccessfully = useLoadGsiScript({
     nonce,
     onScriptLoadSuccess,
     onScriptLoadError,
+    src
   });
 
   const contextValue = useMemo(
